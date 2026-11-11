@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Structure Beyond Length: What Human Raters, LLM Judges and Reward Models Reward in Model Answers"
+type: article
+authors:
+  - family-names: Parrish
+    given-names: Russell
+    orcid: https://orcid.org/0009-0008-9781-7995
+version: "working draft"
+date-released: 2026-11-11
+license: CC-BY-4.0
+url: https://www.parallaxmetrology.com/structure_beyond_length.html
+repository-code: https://github.com/parallaxmetrology/structure-beyond-length
+keywords: [llm evaluation, reward models, llm-as-judge, human preference, style bias, chatbot arena]
+abstract: >
+  Four public preference corpora read with one fixed structural instrument (Linguistic Kernel v19),
+  comparing the two answers to the same prompt. Human raters reward a structure direction beyond length
+  until both answers already carry the 2024 style; an LLM judge and three open reward models used in
+  training keep rewarding it, also beyond Arena's own style-control features. Pre-registered, with all
+  derived data and scripts.

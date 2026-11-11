@@ -1,0 +1,121 @@
+{
+ "battles_with_verdicts": 5794,
+ "unparsed_requests": 33,
+ "failed_requests": 0,
+ "both": {
+  "n_judge_nontie": 2539,
+  "judge_beta": {
+   "dlen": 0.4654,
+   "drep4": -4.1175,
+   "struct": 0.075
+  },
+  "judge_beta_ci": {
+   "dlen": [
+    0.301764036263327,
+    0.6412327476195728
+   ],
+   "drep4": [
+    -5.591187806810421,
+    -2.923366335969549
+   ],
+   "struct": [
+    0.014511856336667406,
+    0.1341131749038486
+   ]
+  },
+  "human_beta_same_battles": {
+   "dlen": 0.379,
+   "drep4": -0.3395,
+   "struct": -0.0001
+  },
+  "human_beta_ci": {
+   "dlen": [
+    0.21240931696020524,
+    0.5452579690286541
+   ],
+   "drep4": [
+    -1.4128878292049325,
+    0.7819145536380161
+   ],
+   "struct": [
+    -0.05833899117520865,
+    0.05637082311770578
+   ]
+  },
+  "ratio_judge": 0.16108619462070375,
+  "ratio_human": -0.0001725060113274108,
+  "ratio_diff": 0.16125870063203115,
+  "ratio_diff_ci": [
+   -0.00028681276550920746,
+   0.36422646813825577
+  ],
+  "agreement_judge_human": 0.6939740055139819,
+  "position_consistency": 0.8816016568864342,
+  "tie_rate": 0.123576113220573
+ },
+ "neither": {
+  "n_judge_nontie": 2562,
+  "judge_beta": {
+   "dlen": 0.758,
+   "drep4": -3.3479,
+   "struct": 0.2199
+  },
+  "judge_beta_ci": {
+   "dlen": [
+    0.61964844978643,
+    0.9270644054237984
+   ],
+   "drep4": [
+    -4.799795425442604,
+    -1.8490999332047677
+   ],
+   "struct": [
+    0.14884265211153447,
+    0.29075180485972146
+   ]
+  },
+  "human_beta_same_battles": {
+   "dlen": 0.7088,
+   "drep4": -0.4528,
+   "struct": 0.1962
+  },
+  "human_beta_ci": {
+   "dlen": [
+    0.5709413003929734,
+    0.869385727025115
+   ],
+   "drep4": [
+    -1.9816317422327712,
+    1.273970507289953
+   ],
+   "struct": [
+    0.12170683942202118,
+    0.26414162040354827
+   ]
+  },
+  "ratio_judge": 0.29017750397786013,
+  "ratio_human": 0.2767806442793419,
+  "ratio_diff": 0.013396859698518226,
+  "ratio_diff_ci": [
+   -0.11578692496187772,
+   0.14761872550746793
+  ],
+  "agreement_judge_human": 0.7298985167837627,
+  "position_consistency": 0.8923023817742493,
+  "tie_rate": 0.1156368657231619
+ },
+ "agreement_both_minus_neither": {
+  "diff": -0.0359245112697808,
+  "ci": [
+   -0.06147351895903995,
+   -0.012405775138134017
+  ]
+ },
+ "predictions": {
+  "Q1 judge rewards structure between two styled answers": true,
+  "Q2 judge rewards structure between two unstyled answers": true,
+  "Q3 judge ratio above human ratio, both styled": false,
+  "Q4 agreement lower in both-styled than neither": true,
+  "Q5 judge rewards length and penalises repetition (both cohorts)": true
+ }
+}

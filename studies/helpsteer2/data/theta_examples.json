@@ -1,0 +1,104 @@
+[
+ {
+  "prompt": "here's a list. what is it? grinning, cheerful, smiling, chuckling, amused, amazed, pouty, astonished, relaxed, pleased, curious, surprised, interested, attracted, bewildered, unhappy, annoyed, frustrated, angry, agitated, furious, mad, shouting, screaming, depressed, irritated, grumpy, yawning, worr",
+  "low_theta": {
+   "rid": 20138,
+   "theta": 0.0,
+   "coherence": 3,
+   "rep4": 0.0,
+   "text": "Here is a merged list of facial expressions and emotions:\n \n\n  Blushing\n  Disinterested\n  Distressed\n  Embarrassed\n  Excited\n  Giggly\n  Grouchy\n  Guilty\n  Hostile\n  Irritable\n  Jubilant\n  Laughing\n  Miserable\n  Nervous\n  Resentful\n  Sad\n  Stoic\n  Sorrowful\n  Tense\n  Thrilled\n  Timid\n  Unhappy\n  Upset\n  Worried\n  Grinning\n  Cheerful\n  Smiling\n  Chuckling\n  Amused\n  Amazed\n  Pouty\n  Astounded\n  Relaxed\n  Pleased\n  Curious\n  Surprised\n  Interested\n  Attracted\n  Bewildered\n  Unhappy\n  Annoyed\n  Frustrated\n  Angry\n  Agitated\n  Furious\n  Mad\n  Shouting\n  Screaming\n  Depressed\n  Irritated\n  Grumpy\n  Yawning\n  Worried\n  Contemptuous\n  Horrorified\n  Nasty\n  Jealous\n \n\n Note that some of these emotion"
+  },
+  "high_theta": {
+   "rid": 20139,
+   "theta": 1.0,
+   "coherence": 4,
+   "rep4": 0.0,
+   "text": "Yes, here is the merged list:\n \n\n grinning, cheerful, smiling, chuckling, amused, amazed, pouty, astonished, relaxed, pleased, curious, surprised, interested, attracted, bewildered, unhappy, annoyed, frustrated, angry, agitated, furious, mad, shouting, screaming, depressed, irritated, grumpy, yawning, worried, contemptuous, horrified, nasty, jealous, blushing, disinterested, distressed, embarrassed, excited, giggly, grouchy, guilty, hostile, irritable, jubilant, laughing, miserable, nervous, resentful, sad, stoic, sorrowful, tense, thrilled, timid, unhappy, upset, worried.\n \n\n Remember that facial expressions and emotions can be complex and multifaceted, and may not always be easy to categor"
+  }
+ },
+ {
+  "prompt": "Перепишіть речення у минулому та у майбутньому часі.\n 1. I am learning grammar rules. 2. Your friends are writing a letter to the President. 3. What are you doing now? 4. He is not sleeping. 5. Who are you waiting for? I am waiting for my friend. 6. She is not listening to the news now. 7. We are lo",
+  "low_theta": {
+   "rid": 4889,
+   "theta": 0.0,
+   "coherence": 3,
+   "rep4": 0.0,
+   "text": "1. When he met me I was walking to the Institute and had little time to talk to him. 2. What your sister is doing now? She is playing tennis. 3. The whole next week we were preparing for the test in physics. 4. Look! Nick is swimming across the river. 5. Our grandmother was cooking dinner from two till three yesterday. 6. He was discussing the problem with his group-mates when the teacher came. 7. They were discussing the plans for the next year at this moment. 8. Do you know who was singing in the yard the whole evening yesterday? 9. I don’t know which book he was reading. 10. Can you tell me who was sitting next to you at the last concert? 11. My telephone was charging from 5 till 6 yester"
+  },
+  "high_theta": {
+   "rid": 4888,
+   "theta": 0.8924971431455939,
+   "coherence": 4,
+   "rep4": 0.0,
+   "text": "1. When he met me, I was walking to the Institute and had little time to talk to him.\n 2. What is your sister doing now? She is playing tennis.\n 3. The whole next week, we were preparing for the test in physics.\n 4. Look! Nick is swimming across the river.\n 5. Our grandmother cooked dinner from two till three yesterday.\n 6. He was discussing the problem with his group-mates when the teacher came.\n 7. They are discussing the plans for the next year at this moment.\n 8. Do you know who was singing in the yard the whole evening yesterday?\n 9. I don’t know which book he was reading.\n 10. Can you tell me who was sitting next to you at the last concert?\n 11. My telephone was charging from 5 till 6 "
+  }
+ },
+ {
+  "prompt": "please write a course outline how how to become a more visionary thinker",
+  "low_theta": {
+   "rid": 7968,
+   "theta": 0.0,
+   "coherence": 3,
+   "rep4": 0.003937007874015741,
+   "text": "Sure, here is a sample course outline for \"How to Become a More Visionary Thinker\":\n\nModule 1: Introduction to Visionary Thinking\n\n    Introduction to the course and the concept of visionary thinking\n    Definition of key terms and concepts\n    Explanation of the benefits of visionary thinking\n    Module objectives and learning outcomes\n\nModule 2: Developing a Visionary Mindset\n\n    The importance of a visionary mindset\n    Characteristics of visionary thinkers\n    Exercises to develop a visionary mindset\n    Developing a growth mindset\n\nModule 3: Identifying Opportunities and Trends\n\n    The importance of opportunity identification\n    Trend analysis and forecasting\n    Exercises to identif"
+  },
+  "high_theta": {
+   "rid": 7969,
+   "theta": 0.8109256123541724,
+   "coherence": 4,
+   "rep4": 0.004608294930875556,
+   "text": "Here is a possible course outline for a program on how to become a more visionary thinker:\n\nWeek 1: Introduction to Visionary Thinking\n- Definition of visionary thinking\n- Importance of visionary thinking in personal and professional life\n- Overview of course content and objectives\n\nWeek 2: Developing a Visionary Mindset\n- Understanding the difference between visionary and practical thinking\n- Developing a growth mindset and embracing risk-taking\n- Exercises to strengthen visionary thinking skills\n\nWeek 3: Identifying Opportunities and Trends\n- Learning to identify opportunities and trends in the marketplace\n- Using tools and techniques to analyze data and identify patterns\n- Case studies of"
+  }
+ },
+ {
+  "prompt": "Write a concept for a campaign feature in a web application. Campaigns should have a target url. Campaigns should have a configurable set of objects that can be included by specifying a list of tags. Campaigns can take place within a configurable timeframe, but can also run indefinitely. It should b",
+  "low_theta": {
+   "rid": 5133,
+   "theta": 0.0,
+   "coherence": 1,
+   "rep4": 0.4035087719298246,
+   "text": "Sure, here's a feature list for the campaign concept:\n \n\n Campaigns can be configured with a target URL and a forward URL\n Campaigns can be configured with a list of tags for objects to be included\n Campaigns can be configured with a timeframe for the campaign\n Campaigns can be configured to run indefinitely\n Campaigns can be configured to ensure that no object is included in two campaigns at the same time\n Campaigns can be configured to track and visualize the number of scans and locations of the scans\n Campaigns can be configured to redirect the end-user to the forward URL when an NFC object is scanned\n Campaigns can be configured to display the results in a dashboard\n Campaigns can be con"
+  },
+  "high_theta": {
+   "rid": 5132,
+   "theta": 0.7590527003622564,
+   "coherence": 4,
+   "rep4": 0.10593220338983056,
+   "text": "Sure, here’s an updated concept for the campaign feature, including a feature list:\n \n\n **Concept: Campaign Feature**\n \n\n The campaign feature in the web application allows users to create and manage campaigns with a target URL, a configurable set of tags for objects that can be included, and a timeframe for the campaign. The target URL is the forward URL that the end-user is redirected to when an NFC object is scanned. Users can also configure a unique target URL for each campaign.\n \n\n During the campaign, users can scan objects with NFC tags that match the campaign’s tags, and these scans will be counted and visualized in the campaign dashboard. The results of the campaign, such as the num"
+  }
+ },
+ {
+  "prompt": "Assume that the following sentence - \"Hi, how are you doing today?\" was spoken by someone and then transcribed using a speech to text system. What transcription errors could be introduced into the final transcribed text?\n<extra_id_1>Assistant\nIn this example, several transcription errors could occur",
+  "low_theta": {
+   "rid": 4858,
+   "theta": 0.0,
+   "coherence": 3,
+   "rep4": 0.25806451612903225,
+   "text": "Sure, here are some more examples of corrupted speech-to-text transcriptions of your sentence, excluding phonetic errors:\n \n\n Omissions:\n \n\n \"Hi, how are you doing t-\"\n \"Hi, how are you doing to-\"\n \"Hi, how are you doing tod-\"\n Insertions:\n \n\n \"Hi, how are you doing todayy?\"\n \"Hi, how are you doing today, right?\"\n \"Hi, how are you doing today, you know?\"\n Word-level errors:\n \n\n \"Hi, how are you doing toady?\"\n \"Hi, how are you doing todayy?\"\n \"Hi, how are you doing today, right?\"\n \"Hi, how are you doing today, you know?\"\n Note that these are just examples and the actual errors that occur in speech-to-text transcriptions can vary widely depending on the quality of the audio, the speaker's acce"
+  },
+  "high_theta": {
+   "rid": 4859,
+   "theta": 0.7494111143793863,
+   "coherence": 4,
+   "rep4": 0.046666666666666634,
+   "text": "Sure! Here are a few more examples of corrupted speech-to-text transcriptions for omissions, insertions, and word-level errors:\n \n\n 1) Omissions:\n \n\n * Hi, how are today?\n * Hi, how you doing today?\n \n\n 2) Insertions:\n \n\n * Hi, how are you doing today, how are you doing today?\n * Hi, how are you doing today, hello?\n \n\n 3) Word-level errors:\n \n\n * Hi, how are you bing today?\n * Hi, how are hearing you doing today?\n \n\n Note that these are just a few examples, and there are many other ways that the speech-to-text program could corrupt the transcription.\n \n\n It's also worth noting that many modern speech-to-text programs use machine learning algorithms, and as a result, they often get better at "
+  }
+ },
+ {
+  "prompt": "universities in dubai \"in dubai city\"\n<extra_id_1>Assistant\nSure, the top-ranked universities in Dubai are the American University of Dubai, the Dubai Women’s College, and the American University of Dubai. Dubai City is also home to the Dubai International Academic City, which is a free economic zon",
+  "low_theta": {
+   "rid": 17725,
+   "theta": 0.0,
+   "coherence": 2,
+   "rep4": 0.14655172413793105,
+   "text": "Here is a list of some of the universities located in Dubai City:\n \n\n American University of Dubai\n Dubai Women's College\n American University of Dubai\n Dubai International Academic City\n University of Dubai\n American College of Dubai\n Canadian University Dubai\n Heriot-Watt University Dubai\n Middlesex University Dubai\n Rochester Institute of Technology Dubai\n SP Jain School of Global Management Dubai\n The British University in Dubai\n The University of Wollongong in Dubai\n The American University in Dubai\n The Canadian University Dubai\n The Dubai Institute of Technology\n The Heriot-Watt University Dubai\n The Middlesex University Dubai\n The Rochester Institute of Technology Dubai\n The SP Jain "
+  },
+  "high_theta": {
+   "rid": 17724,
+   "theta": 0.7278524658140801,
+   "coherence": 4,
+   "rep4": 0.0,
+   "text": "Sure, here is a list of universities in Dubai City:\n \n\n 1. American University in Dubai\n 2. Heriot-Watt University Dubai\n 3. Murdoch University Dubai\n 4. University of Wollongong in Dubai\n 5. Manipal Academy of Higher Education Dubai\n 6. Middlesex University Dubai\n 7. The University of Manchester Middle East Centre\n 8. Zayed University Dubai\n 9. Dubai Medical College for Girls\n 10. Dubai Pharmacy College for Girls\n 11. Emirates Aviation University\n 12. Hamdan Bin Mohammed Smart University\n 13. Dubai Men's College\n 14. Dubai Women's College\n \n\n Note that this is not an exhaustive list, and there may be other universities operating in Dubai City."
+  }
+ }
+]

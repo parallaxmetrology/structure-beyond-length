@@ -1,0 +1,12 @@
+{
+ "sd_struct_both": 1.4364002521790629,
+ "sd_struct_neither": 1.2108949117663206,
+ "sd_dlen_both": 0.523231837677343,
+ "sd_dlen_neither": 0.6100735745706813,
+ "neither_matched_struct_beta": 0.22405827062696737,
+ "neither_matched_struct_beta_ci": [
+  0.17688309572064753,
+  0.29240377937459566
+ ],
+ "both_struct_beta": 0.0024034442668504114
+}

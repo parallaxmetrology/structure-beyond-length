@@ -1,0 +1,29 @@
+nohup: ignoring input
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.07it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.29it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.39it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.72it/s]
+armorm: 0/5794  0.1 min elapsed
+Token indices sequence length is longer than the specified maximum sequence length for this model (4305 > 4096). Running this sequence through the model will result in indexing errors
+armorm: 250/5794  0.6 min elapsed
+armorm: 500/5794  1.2 min elapsed
+armorm: 750/5794  1.7 min elapsed
+armorm: 1000/5794  2.3 min elapsed
+armorm: 1250/5794  2.9 min elapsed
+armorm: 1500/5794  3.5 min elapsed
+armorm: 1750/5794  4.1 min elapsed
+armorm: 2000/5794  4.7 min elapsed
+armorm: 2250/5794  5.3 min elapsed
+armorm: 2500/5794  5.9 min elapsed
+armorm: 2750/5794  6.5 min elapsed
+armorm: 3000/5794  7.0 min elapsed
+armorm: 3250/5794  7.7 min elapsed
+armorm: 3500/5794  8.2 min elapsed
+armorm: 3750/5794  8.8 min elapsed
+armorm: 4000/5794  9.5 min elapsed
+armorm: 4250/5794  10.1 min elapsed
+armorm: 4500/5794  10.7 min elapsed
+armorm: 4750/5794  11.3 min elapsed
+armorm: 5000/5794  11.8 min elapsed
+armorm: 5250/5794  12.4 min elapsed
+armorm: 5500/5794  12.9 min elapsed
+armorm: 5750/5794  13.5 min elapsed
+armorm: 87 answers shortened to fit 4096 tokens
+armorm: done, 5794 battles, 13.6 min -> /workspace/rm_audit/results/armorm.csv

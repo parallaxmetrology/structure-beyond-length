@@ -1,0 +1,10 @@
+public_corpora/*
+!public_corpora/README.md
+!public_corpora/fetch_corpora.sh
+studies/alpacaeval/data/verdicts.json
+studies/arena_judge/requests.jsonl
+studies/rm_audit/battles.jsonl
+__pycache__/
+.DS_Store
+*.aux
+*.log

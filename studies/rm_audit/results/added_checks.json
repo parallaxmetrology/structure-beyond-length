@@ -1,0 +1,172 @@
+{
+ "C1_cosines": {
+  "armorm": {
+   "armorm": 1.0,
+   "gpm": 0.743,
+   "pairrm": 0.754,
+   "judge_alpacaeval": 0.939,
+   "human_helpsteer2": 0.893
+  },
+  "gpm": {
+   "armorm": 0.743,
+   "gpm": 1.0,
+   "pairrm": 0.407,
+   "judge_alpacaeval": 0.743,
+   "human_helpsteer2": 0.766
+  },
+  "pairrm": {
+   "armorm": 0.754,
+   "gpm": 0.407,
+   "pairrm": 1.0,
+   "judge_alpacaeval": 0.676,
+   "human_helpsteer2": 0.514
+  },
+  "judge_alpacaeval": {
+   "armorm": 0.939,
+   "gpm": 0.743,
+   "pairrm": 0.676,
+   "judge_alpacaeval": 1.0,
+   "human_helpsteer2": 0.916
+  },
+  "human_helpsteer2": {
+   "armorm": 0.893,
+   "gpm": 0.766,
+   "pairrm": 0.514,
+   "judge_alpacaeval": 0.916,
+   "human_helpsteer2": 1.0
+  }
+ },
+ "C2": {
+  "armorm": {
+   "student_models_in_both_cohort": [
+    "athene-70b-0725",
+    "gemini-1.5-flash-api-0514",
+    "gemini-1.5-pro-api-0514",
+    "gemini-1.5-pro-exp-0801",
+    "gemma-2-27b-it",
+    "gemma-2-2b-it",
+    "gemma-2-9b-it",
+    "gemma-2-9b-it-simpo",
+    "llama-3-70b-instruct",
+    "llama-3-8b-instruct",
+    "llama-3.1-405b-instruct",
+    "llama-3.1-70b-instruct",
+    "llama-3.1-8b-instruct",
+    "reka-core-20240722"
+   ],
+   "battles_with_student": 50,
+   "without_students": {
+    "n": 2786,
+    "beta_struct": 0.4022120430195217,
+    "ci": [
+     0.34744308971015414,
+     0.46641517860763826
+    ]
+   }
+  },
+  "gpm": {
+   "student_models_in_both_cohort": [],
+   "battles_with_student": 0,
+   "without_students": {
+    "n": 2879,
+    "beta_struct": 0.4222160551934946,
+    "ci": [
+     0.3523872698214688,
+     0.4906876404113441
+    ]
+   }
+  },
+  "pairrm": {
+   "student_models_in_both_cohort": [],
+   "battles_with_student": 0,
+   "without_students": {
+    "n": 2896,
+    "beta_struct": 0.2441720840140225,
+    "ci": [
+     0.19204344660651626,
+     0.2994758724139298
+    ]
+   }
+  }
+ },
+ "C3": {
+  "armorm": {
+   "both": {
+    "n": 2243,
+    "beta_struct": 0.4010060818239127,
+    "ci": [
+     0.33488514748858417,
+     0.4731721776296585
+    ]
+   },
+   "neither": {
+    "n": 2272,
+    "beta_struct": 0.3672427985297636,
+    "ci": [
+     0.2881852248230923,
+     0.4480403491899381
+    ]
+   },
+   "human_both_nocode": {
+    "n": 2243,
+    "beta_struct": 0.061637370718044905,
+    "ci": [
+     -0.006639995874129657,
+     0.12585667162016115
+    ]
+   }
+  },
+  "gpm": {
+   "both": {
+    "n": 2289,
+    "beta_struct": 0.38710454473640277,
+    "ci": [
+     0.3093072847993174,
+     0.4590693189917521
+    ]
+   },
+   "neither": {
+    "n": 2315,
+    "beta_struct": 0.29913635700082275,
+    "ci": [
+     0.21867469671610143,
+     0.3958271464086365
+    ]
+   },
+   "human_both_nocode": {
+    "n": 2289,
+    "beta_struct": 0.057945430113195355,
+    "ci": [
+     -0.0037327685762985324,
+     0.12466799791121021
+    ]
+   }
+  },
+  "pairrm": {
+   "both": {
+    "n": 2294,
+    "beta_struct": 0.23999716453927836,
+    "ci": [
+     0.18102356257366597,
+     0.3034416212078189
+    ]
+   },
+   "neither": {
+    "n": 2324,
+    "beta_struct": 0.18681893303126676,
+    "ci": [
+     0.11042191115225153,
+     0.26222236633167106
+    ]
+   },
+   "human_both_nocode": {
+    "n": 2294,
+    "beta_struct": 0.05917424071596561,
+    "ci": [
+     -9.477164138193528e-05,
+     0.12712057029333237
+    ]
+   }
+  }
+ }
+}

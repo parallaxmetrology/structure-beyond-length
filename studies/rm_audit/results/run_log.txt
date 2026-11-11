@@ -1,0 +1,831 @@
+=== start Wed Nov 11 17:53:25 UTC 2026
+name, memory.total [MiB]
+NVIDIA L40S, 46068 MiB
+transformers 4.44.2 torch 2.8.0+cu128 cuda True
+=== smoke test: armorm
+A new version of the following files was downloaded from https://huggingface.co/RLHFlow/ArmoRM-Llama3-8B-v0.1:
+- modeling_custom.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+Downloading shards:   0%|          | 0/4 [00:00<?, ?it/s]Downloading shards:  25%|██▌       | 1/4 [01:00<03:00, 60.03s/it]Downloading shards:  50%|█████     | 2/4 [02:17<02:20, 70.36s/it]Downloading shards:  75%|███████▌  | 3/4 [03:13<01:03, 63.89s/it]Downloading shards: 100%|██████████| 4/4 [03:19<00:00, 40.84s/it]Downloading shards: 100%|██████████| 4/4 [03:19<00:00, 49.83s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.14it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.31it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.39it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.05it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.70it/s]
+armorm: 0/5  3.4 min elapsed
+armorm: done, 5 battles, 3.4 min -> /workspace/rm_audit/results/armorm_smoke.csv
+=== full run: armorm
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.20it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.37it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.46it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.00it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.71it/s]
+armorm: 0/5794  0.1 min elapsed
+Token indices sequence length is longer than the specified maximum sequence length for this model (4305 > 4096). Running this sequence through the model will result in indexing errors
+armorm: 250/5794  0.6 min elapsed
+Traceback (most recent call last):
+  File "/workspace/rm_audit/score_rm.py", line 55, in <module>
+    w.writerow([b["row"], score(b["prompt"], b["a"]), score(b["prompt"], b["b"])]); f.flush(); log(i, len(battles))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rm_audit/score_rm.py", line 52, in score
+    return model(ids).score.float().item()
+           ^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.cache/huggingface/modules/transformers_modules/RLHFlow/ArmoRM-Llama3-8B-v0.1/eb2676d20da2f2d41082289d23c59b9f7427f955/modeling_custom.py", line 152, in forward
+    gating_token_positions = [find_token_for_gating(ids.tolist()) for ids in input_ids]
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.cache/huggingface/modules/transformers_modules/RLHFlow/ArmoRM-Llama3-8B-v0.1/eb2676d20da2f2d41082289d23c59b9f7427f955/modeling_custom.py", line 47, in find_token_for_gating
+    raise ValueError("Token pattern not found in the list.")
+ValueError: Token pattern not found in the list.
+!! armorm full run failed
+=== smoke test: gpm
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 24.22it/s]
+gpm: 0/5  3.3 min elapsed
+gpm: done, 5 battles, 3.3 min -> /workspace/rm_audit/results/gpm_smoke.csv
+=== full run: gpm
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 22.17it/s]
+gpm: 0/5794  0.1 min elapsed
+gpm: 250/5794  0.5 min elapsed
+gpm: 500/5794  0.8 min elapsed
+gpm: 750/5794  1.2 min elapsed
+gpm: 1000/5794  1.6 min elapsed
+gpm: 1250/5794  2.0 min elapsed
+gpm: 1500/5794  2.4 min elapsed
+gpm: 1750/5794  2.8 min elapsed
+gpm: 2000/5794  3.2 min elapsed
+gpm: 2250/5794  3.6 min elapsed
+gpm: 2500/5794  4.0 min elapsed
+gpm: 2750/5794  4.4 min elapsed
+gpm: 3000/5794  4.8 min elapsed
+gpm: 3250/5794  5.2 min elapsed
+gpm: 3500/5794  5.6 min elapsed
+gpm: 3750/5794  6.0 min elapsed
+gpm: 4000/5794  6.5 min elapsed
+gpm: 4250/5794  6.9 min elapsed
+gpm: 4500/5794  7.3 min elapsed
+gpm: 4750/5794  7.7 min elapsed
+gpm: 5000/5794  8.0 min elapsed
+gpm: 5250/5794  8.4 min elapsed
+gpm: 5500/5794  8.8 min elapsed
+gpm: 5750/5794  9.2 min elapsed
+gpm: done, 5794 battles, 9.3 min -> /workspace/rm_audit/results/gpm.csv
+=== smoke test: pairrm
+WARNING:root:No ranker config provided, no ranker loaded, please load ranker first through load_ranker()
+WARNING:root:No fuser config provided, no fuser loaded, please load fuser first through load_fuser()
+WARNING:root:Checkpoint 'llm-blender/PairRM' does not exist
+WARNING:root:Try dowloading checkpoint from huggingface hub: llm-blender/PairRM
+WARNING:root:Successfully downloaded checkpoint to '/workspace/.cache/huggingface/hub/llm-blender/PairRM'
+/usr/local/lib/python3.12/dist-packages/dataclasses_json/core.py:201: RuntimeWarning: 'NoneType' object value of non-optional type load_checkpoint detected when decoding RankerConfig.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/dataclasses_json/core.py:201: RuntimeWarning: 'NoneType' object value of non-optional type device detected when decoding RankerConfig.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/transformers/convert_slow_tokenizer.py:551: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+Successfully loaded ranker from  /workspace/.cache/huggingface/hub/llm-blender/PairRM
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:01<00:00,  1.30s/it]Ranking candidates: 100%|██████████| 1/1 [00:01<00:00,  1.31s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:01<00:00,  1.16s/it]Ranking candidates: 100%|██████████| 1/1 [00:01<00:00,  1.16s/it]
+pairrm: 0/5  1.7 min elapsed
+pairrm: done, 5 battles, 1.7 min -> /workspace/rm_audit/results/pairrm_smoke.csv
+=== full run: pairrm
+WARNING:root:No ranker config provided, no ranker loaded, please load ranker first through load_ranker()
+WARNING:root:No fuser config provided, no fuser loaded, please load fuser first through load_fuser()
+/usr/local/lib/python3.12/dist-packages/dataclasses_json/core.py:201: RuntimeWarning: 'NoneType' object value of non-optional type load_checkpoint detected when decoding RankerConfig.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/dataclasses_json/core.py:201: RuntimeWarning: 'NoneType' object value of non-optional type device detected when decoding RankerConfig.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/transformers/convert_slow_tokenizer.py:551: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+Successfully loaded ranker from  /workspace/.cache/huggingface/hub/llm-blender/PairRM
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.29s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.29s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.03s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.03s/it]
+pairrm: 0/5794  0.2 min elapsed
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.54s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.54s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.58s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.58s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.80s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.80s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.50s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.50s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.30s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.30s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.58s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.58s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.57s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.57s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.25s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.25s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.25s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.25s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.28s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.28s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.48s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.48s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.29s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.29s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.58s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.58s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.58s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.58s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.97s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.97s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.45s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.45s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.44s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.44s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.37s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.37s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.29s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.29s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.23s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.23s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.21s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.21s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.76s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.76s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.48s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.48s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.46s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.46s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.29s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.29s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.28s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.28s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.97s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.98s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.28s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.28s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.28s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.28s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.14s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.14s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.16s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.16s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.35s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.09s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.09s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.09s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.09s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.99s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.99s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.70s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.70s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.68s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.68s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.33s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.33s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.41s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.45s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.45s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.71s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.71s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.58s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.58s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.46s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.46s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.73s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.73s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.73s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.73s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.71s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.71s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.95s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.95s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.98s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.98s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.97s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.97s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.95s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.95s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.24s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.24s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.30s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.30s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.48s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.46s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.46s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.36s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.36s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.36s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.36s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.37s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.37s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.29s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.29s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.30s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.30s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.25s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.25s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.13s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.13s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.15s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.15s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.64s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.64s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.61s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.61s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.99s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.99s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.66s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.66s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.79s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.79s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.78s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.78s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]
+pairrm: 2000/5794  18.1 min elapsed
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.55s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.55s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.36s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.36s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.59s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.59s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.54s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.54s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.68s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.68s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.70s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.70s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.77s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.77s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.72s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.72s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.79s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.79s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.79s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.79s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.99s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.99s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.94s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.94s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.61s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.61s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.65s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.65s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.71s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.71s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.05s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.05s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.71s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.71s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.49s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.49s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.50s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.50s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.49s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.49s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.59s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.59s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.59s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.59s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.61s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.61s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.67s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.67s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.67s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.67s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.08s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.09s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.09s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.10s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.50s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.50s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.09s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.09s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.27s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.27s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.25s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.25s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.12s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.12s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.12s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.12s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.01s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.01s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:01<00:00,  1.98s/it]Ranking candidates: 100%|██████████| 1/1 [00:01<00:00,  1.98s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.40s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.40s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.40s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.40s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.79s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.79s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.72s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.72s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.68s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.68s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.73s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.73s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.72s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.72s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.17s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.18s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.18s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.33s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.33s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.59s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.59s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.94s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.37s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.37s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.70s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.70s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.69s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.69s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.97s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.97s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.31s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.71s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.71s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.72s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.72s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.22s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.21s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.21s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.25s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.25s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.07s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.07s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.50s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.50s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.36s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.36s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.34s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.34s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.47s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.63s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.63s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.62s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.62s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.95s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.96s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.95s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.95s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.65s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.65s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.65s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.65s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.10s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.10s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.54s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.54s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.54s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.55s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+pairrm: 4000/5794  35.9 min elapsed
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.33s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.33s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.50s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.50s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.48s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.48s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.63s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.63s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.63s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.63s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.66s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.66s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.66s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.66s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.10s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.10s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.34s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.35s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.35s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.09s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.09s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.11s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.04s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.04s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.61s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.61s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.72s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.72s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.78s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.78s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.33s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.33s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.19s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.24s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.24s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.90s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.90s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.99s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.99s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.41s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.41s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.77s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.77s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.76s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.76s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.07s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.07s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.06s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.73s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.73s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.35s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.35s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.37s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.37s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.76s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.76s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.80s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.07s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.14s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.14s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.14s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.14s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  3.00s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  3.00s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.03s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.03s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.99s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.99s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.98s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.98s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.72s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.72s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.79s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.79s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.39s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.39s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.41s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.57s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.57s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.98s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.98s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.08s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.08s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.05s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.05s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.42s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.44s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.64s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.64s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.64s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.64s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.45s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.45s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.53s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.51s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.51s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.38s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.14s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.14s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.14s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.14s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.54s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.54s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.60s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.60s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.93s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.55s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.80s/it]Ranking candidates: 100%|██████████| 1/1 [00:02<00:00,  2.80s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.82s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.83s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.88s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.88s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.50s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.50s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.51s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.45s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.45s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.45s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.45s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.99s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.99s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.01s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.01s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.63s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.63s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.61s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.61s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.75s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.75s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.74s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.85s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.32s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.32s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.92s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.95s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.95s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.86s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]Ranking candidates: 100%|██████████| 1/1 [00:03<00:00,  3.52s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.43s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.41s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.41s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]Ranking candidates: 100%|██████████| 1/1 [00:04<00:00,  4.84s/it]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:00<00:00,  3.86it/s]Ranking candidates: 100%|██████████| 1/1 [00:00<00:00,  3.85it/s]
+Ranking candidates:   0%|          | 0/1 [00:00<?, ?it/s]Ranking candidates: 100%|██████████| 1/1 [00:00<00:00,  3.87it/s]Ranking candidates: 100%|██████████| 1/1 [00:00<00:00,  3.87it/s]
+pairrm: done, 5794 battles, 51.7 min -> /workspace/rm_audit/results/pairrm.csv
